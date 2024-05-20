@@ -40,7 +40,7 @@
             background-repeat: no-repeat;
             background-position: center;
         }
-        
+
         #button-load {
             font-family: 'Lato', sans-serif;
             font-size: 17px;
@@ -61,6 +61,7 @@
             white-space: nowrap;
             z-index: 100;
         }
+
         #button-container {
             position: absolute;
             bottom: 3%;
@@ -92,20 +93,20 @@
             left: 8%;
             top: 20%
         }
-     
+
     </style>
     <style>
         :not(:defined) > * {
             display: none;
         }
-    
+
         model-viewer {
             background-color: #eee;
             overflow-x: hidden;
             width: 100%;
             height: 100%;
         }
-    
+
         #ar-button {
             background-image: url("https://dsm01pap003files.storage.live.com/y4mfPMLShR2urzK_NNKgWkcBor6qH3qJ0WDQu1jWaHtG71mPiY_xJeP1gfAo06FMKRnevbY832ZY2cVAd4pXp0G_IQh_9p2rMAkvlds-KK2NY7YJ9vvZ4pfzTUjnBOhkZwhxUAtwEpcP60JboN8MgairF-yCLXMh0C1sb890fw7Sz_TaZprX0OGVkVfpoDjuEnQ?width=72&height=72&cropmode=none");
             background-repeat: no-repeat;
@@ -116,7 +117,7 @@
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-            bottom: 20%;
+            bottom: 10%;
             padding: 0px 16px 0px 40px;
             font-family: Roboto Regular, Helvetica Neue, sans-serif;
             font-size: 14px;
@@ -126,29 +127,29 @@
             border-radius: 18px;
             border: 1px solid #DADCE0;
         }
-    
+
         #ar-button:active {
             background-color: #E8EAED;
         }
-    
+
         #ar-button:focus {
             outline: none;
         }
-    
+
         #ar-button:focus-visible {
             outline: 1px solid #4285f4;
         }
-    
+
         @keyframes circle {
             from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
             to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
         }
-    
+
         @keyframes elongate {
             from { transform: translateX(100px); }
             to   { transform: translateX(-100px); }
         }
-    
+
         model-viewer > #ar-prompt {
             position: absolute;
             left: 50%;
@@ -156,15 +157,15 @@
             animation: elongate 2s infinite ease-in-out alternate;
             display: none;
         }
-    
+
         model-viewer[ar-status="session-started"] > #ar-prompt {
             display: block;
         }
-    
+
         model-viewer > #ar-prompt > img {
             animation: circle 4s linear infinite;
         }
-    
+
         model-viewer > #ar-failure {
             position: absolute;
             left: 50%;
@@ -172,7 +173,7 @@
             bottom: 175px;
             display: none;
         }
-    
+
         model-viewer[ar-tracking="not-tracking"] > #ar-failure {
             display: block;
         }
@@ -226,7 +227,7 @@
             transition: width 0.29s;
         }
 
-    
+
     </style>
 </head>
 <body style="overflow: hidden;">
@@ -238,14 +239,14 @@
     skybox-image="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVgWVr_HU1FGWArRFU/root/content"
     environment-image="https://dl.dropboxusercontent.com/s/gq8flbdmrg8k36v/dancing_hall_1k.hdr"
     shadow-intensity="1"
-    ar ar-modes="webxr quick-look" ar-scale="auto"
+    ar ar-modes="scene-viewer quick-look" ar-scale="auto"
     camera-controls
     touch-action="pan-y"
     disable-tap
     autoplay
     alt="Model Feature">
         <div id="lazy-load-poster" slot="poster"></div>
-        <div id="const modelViewer" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
+        <div id="button-load" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
         <div id="button-container">
             <button id="animation1">1</button>
             <button id="animation2">2</button>
@@ -264,7 +265,7 @@
         <div id="ar-prompt">
             <img src="https://dsm01pap003files.storage.live.com/y4mC3A-1tKI1i5D3AoIyjvOOuPJAz8kETA8txgPsEcALlJdoo2jHeXux-QXaef_-mipaNigQon40VTR2zDvYjEJ-hQ4M24qjsXIT622gNImHa_JW0BuaE9j_cE-MqBDqdW2_FH2cJTAITEw4MiKautYcjwcxQmIJybteHZWBu6OxYtCXjTU8PuC1iPu-We1fjJs?width=50&height=54&cropmode=none">
         </div>
-        
+
         <button id="ar-failure">
             Realidad Aumentada no está rastreando!
         </button>
@@ -272,7 +273,7 @@
 </div>
 
 <script>
-  
+
 
     const modelViewerID = document.getElementById("lazy-load")
     const x = 1;
@@ -280,10 +281,8 @@
     const z = 1;
     modelViewerID.scale = `${x} ${y} ${z}`;
 
-    const botonDeCarga = document.getElementById('button-load');
-    botonDeCarga.addEventListener('click', (event) => {
-        botonDeCarga.style.visibility = "hidden";
-    });
+    const modelViewer = document.querySelector("#lazy-load");
+
 
     var animation1 = document.getElementById('animation1');
     animation1.addEventListener("click", function() {
@@ -300,13 +299,18 @@
         modelViewer.animationName = "step_by_step";
     });
 
-  
+    const botonDeCarga = document.getElementById('button-load');
+    botonDeCarga.addEventListener('click', (event) => {
+        botonDeCarga.style.visibility = "hidden";
+    });
+
+
 
     var estado = document.getElementsByClassName('headerCargando')[0];
     estado.style.visibility = "hidden";
 
-  
-    
+
+
     const onProgress = (event) => {
     const progressBar = event.target.querySelector('.progress-bar');
     const updatingBar = event.target.querySelector('.update-bar');
@@ -314,13 +318,13 @@
     if (event.detail.totalProgress === 1) {
         progressBar.classList.add('hide');
         estado.style.visibility = "hidden";
-
+                
         if(modelViewer.loaded == true){
             animation1.style.visibility = "visible"
             animation2.style.visibility = "visible"
             animation3.style.visibility = "visible"
-        }
-        
+        };
+
     } else {
         progressBar.classList.remove('hide');
         estado.style.visibility = "visible";
@@ -330,11 +334,11 @@
 
     document.getElementById("lazy-load").addEventListener('progress', onProgress);
 
- 
+
     document.querySelector('#button-load').addEventListener('click', 
     () => document.querySelector('#lazy-load').dismissPoster());
-                
-    
+
+
 
 </script>
 </body>
