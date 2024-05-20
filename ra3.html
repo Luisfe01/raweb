@@ -35,7 +35,7 @@
             right: 0;
             top: 0;
             bottom: 0;
-            background: url("https://onedrive.live.com/embed?resid=D5A5318E9AF922FC%21902&authkey=%21AGxXVrT0hDLqliU&width=510&height=512");
+            background: url("https://onedrive.live.com/embed?resid=D5A5318E9AF922FC%21960&authkey=%21AFStvVZRZGT9C9M&width=510&height=512");
             background-size: contain;
             background-repeat: no-repeat;
             background-position: center;
@@ -60,6 +60,32 @@
             transform: translate3d(-50%, -50%, 0);
             white-space: nowrap;
             z-index: 100;
+        }
+        #button-container {
+            position: absolute;
+            bottom: 3%;
+            right: 3%;
+            display: flex;
+            gap: 20px; /* Espacio fijo entre los botones */
+        }
+
+        #animation1,
+        #animation2,
+        #animation3 {
+            cursor: pointer;
+            font-size: 15px;
+            white-space: nowrap;
+            background-color: #FFFFFF;
+            border: 2px solid rgb(209,213,219);
+            border-radius: 16px;
+            box-sizing: border-box;
+            color: #000000;
+            font-family: Inter, sans-serif;
+            justify-content: center;
+            line-height: 28px;
+            padding: 8px 14px;
+            text-decoration: none;
+            visibility: hidden;
         }
         .loadIcon{
             position: absolute;
@@ -90,7 +116,7 @@
             left: 50%;
             transform: translateX(-50%);
             white-space: nowrap;
-            bottom: 10%;
+            bottom: 20%;
             padding: 0px 16px 0px 40px;
             font-family: Roboto Regular, Helvetica Neue, sans-serif;
             font-size: 14px;
@@ -207,7 +233,7 @@
 <div class="container">
     <model-viewer id="lazy-load"
     reveal="manual"
-    src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVhwDlkavsEVwbxXA2/root/content" 
+    src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVhz-A4LzH79m7ptNI/root/content" 
     poster=""
     skybox-image="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVgWVr_HU1FGWArRFU/root/content"
     environment-image="https://dl.dropboxusercontent.com/s/gq8flbdmrg8k36v/dancing_hall_1k.hdr"
@@ -219,7 +245,12 @@
     autoplay
     alt="Model Feature">
         <div id="lazy-load-poster" slot="poster"></div>
-        <div id="button-load" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
+        <div id="const modelViewer" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
+        <div id="button-container">
+            <button id="animation1">1</button>
+            <button id="animation2">2</button>
+            <button id="animation3">3</button>
+        </div>
         <div>
             <h1 class="headerCargando">Cargando...</h1>
         </div>
@@ -254,6 +285,21 @@
         botonDeCarga.style.visibility = "hidden";
     });
 
+    var animation1 = document.getElementById('animation1');
+    animation1.addEventListener("click", function() {
+        modelViewer.animationName = "exploded_view";
+    });
+
+    var animation2 = document.getElementById('animation2');
+    animation2.addEventListener("click", function() {
+        modelViewer.animationName = "hover";
+    });
+
+    var animation3 = document.getElementById('animation3');
+    animation3.addEventListener("click", function() {
+        modelViewer.animationName = "step_by_step";
+    });
+
   
 
     var estado = document.getElementsByClassName('headerCargando')[0];
@@ -268,6 +314,13 @@
     if (event.detail.totalProgress === 1) {
         progressBar.classList.add('hide');
         estado.style.visibility = "hidden";
+
+        if(modelViewer.loaded == true){
+            animation1.style.visibility = "visible"
+            animation2.style.visibility = "visible"
+            animation3.style.visibility = "visible"
+        }
+        
     } else {
         progressBar.classList.remove('hide');
         estado.style.visibility = "visible";
