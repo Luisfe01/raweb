@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Model Viewer con Texturas Intercambiables</title>
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+</head>
+<body>
+    <h1>Model Viewer con Texturas Intercambiables</h1>
+    
+    <!-- Modelo 3D -->
+    <model-viewer id="model" src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXViDwfC3WoG-JVMlS5/root/content" alt="A 3D model" auto-rotate camera-controls></model-viewer>
+    
+    <!-- Select para cambiar texturas -->
+    <label for="texture-select">Selecciona una textura:</label>
+    <select id="texture-select">
+        <option value="https://luisfe01.github.io/raweb/1.jpg">Textura 1</option>
+        <option value="https://luisfe01.github.io/raweb/2.jpg">Textura 2</option>
+        <option value="https://luisfe01.github.io/raweb/3.jpg">Textura 3</option>
+    </select>
+    
+    <script>
+        const modelViewer = document.getElementById('model');
+        const textureSelect = document.getElementById('texture-select');
+
+        textureSelect.addEventListener('change', async () => {
+            const selectedTexture = textureSelect.value;
+            const texture = new Image();
+            texture.src = selectedTexture;
+            texture.crossOrigin = "anonymous";
+            await texture.decode();
+
+            const material = modelViewer.model.materials[0]; // Suponiendo que tu modelo tiene un material principal
+            const threeTexture = new THREE.Texture(texture);
+            threeTexture.needsUpdate = true;
+            material.pbrMetallicRoughness.setBaseColorTexture(threeTexture);
+        });
+    </script>
+</body>
+</html>
