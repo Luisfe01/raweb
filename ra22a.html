@@ -1,59 +1,346 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device=width, initial-scale=1.0">
-  <title>Founder Series</title>
-  <script type="module" src="https://unpkg.com/@google/model-viewer@1.9.2/dist/model-viewer.min.js"></script><!---->
- 
-  <style>
-    model-viewer{
-      width: 90%;
-      height: 512px;
-      margin: 0 auto;
-      padding: 10;
-    }
-  </style>
-</head>
-<body>
-  <select class="controls" ,="" id="color-controls" onchange="updateCol();" >
-    <option value="https://luisfe01.github.io/raweb/1.jpg">Black Walnut</option>
-    <option value="https://luisfe01.github.io/raweb/2.jpg">Dark Cherry</option>
-    <option value="https://luisfe01.github.io/raweb/3.jpg" selected="selected">Walnut</option>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@700&display=swap" rel="stylesheet">    
+    <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+    <style>
+        .container{
+            position: absolute;
+            margin-left: auto;
+            margin-right: auto;            
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-  </select>
- 
- 
-  <p>Founder 120H</p>
-  <model-viewer id="speaker" ar ar-modes="webxr scene-viewer quick-look" camera-controls auto-rotate src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXViDwfC3WoG-JVMlS5/root/content" onload="updateCol();">
-    <button slot="ar-button" style="background-color: white; border-radius: 4px; border: none; position: absolute; bottom: 16px; right: 16px; ">View in AR</button>
-  </model-viewer>
-  <br>
+
+        p{
+            display: inline;
+            font-family: lato,sans-serif;
+        }
+
+    </style>
+    <style>
+        #lazy-load-poster {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background: url("https://onedrive.live.com/embed?resid=D5A5318E9AF922FC%211068&authkey=%21ANGchefQjPfWhjQ&width=495&height=512");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        
+        #button-load {
+            font-family: 'Lato', sans-serif;
+            font-size: 17px;
+            background-repeat: no-repeat;
+            background-size: 24px 24px;
+            background-position: 6% 50%;
+            background: linear-gradient(0deg, rgba(56,96,241,1) 0%, rgba(76,174,239,1) 69%);
+            color: white;
+            cursor: pointer;
+            border-radius: 20px;
+            display: inline-block;
+            padding: 10px 18px 9px 40px;
+            box-shadow: 0 0 8px rgba(0,0,0,.2), 0 0 4px rgba(0,0,0,.25);
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            white-space: nowrap;
+            z-index: 100;
+        }
+        .loadIcon{
+            position: absolute;
+            left: 8%;
+            top: 20%
+        }
+     
+    </style>
+    <style>
+        :not(:defined) > * {
+            display: none;
+        }
     
- 
- 
-  <script>
- 
-    //called on change in colour selection list
-    function updateCol(){
-      
-      let speakers = document.querySelectorAll("#speaker")
- 
-      speakers.forEach(function(speaker){
-        const material = speaker.model.materials[0];
- 
+        model-viewer {
+            background-color: #eee;
+            overflow-x: hidden;
+            width: 100%;
+            height: 100%;
+        }
+    
+        #ar-button {
+            background-image: url("https://dsm01pap003files.storage.live.com/y4mfPMLShR2urzK_NNKgWkcBor6qH3qJ0WDQu1jWaHtG71mPiY_xJeP1gfAo06FMKRnevbY832ZY2cVAd4pXp0G_IQh_9p2rMAkvlds-KK2NY7YJ9vvZ4pfzTUjnBOhkZwhxUAtwEpcP60JboN8MgairF-yCLXMh0C1sb890fw7Sz_TaZprX0OGVkVfpoDjuEnQ?width=72&height=72&cropmode=none");
+            background-repeat: no-repeat;
+            background-size: 20px 20px;
+            background-position: 12px 50%;
+            background-color: #fff;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            bottom: 10%;
+            padding: 0px 16px 0px 40px;
+            font-family: Roboto Regular, Helvetica Neue, sans-serif;
+            font-size: 14px;
+            color:#4285f4;
+            height: 36px;
+            line-height: 36px;
+            border-radius: 18px;
+            border: 1px solid #DADCE0;
+        }
+    
+        #ar-button:active {
+            background-color: #E8EAED;
+        }
+    
+        #ar-button:focus {
+            outline: none;
+        }
+    
+        #ar-button:focus-visible {
+            outline: 1px solid #4285f4;
+        }
+    
+        @keyframes circle {
+            from { transform: translateX(-50%) rotate(0deg) translateX(50px) rotate(0deg); }
+            to   { transform: translateX(-50%) rotate(360deg) translateX(50px) rotate(-360deg); }
+        }
+    
+        @keyframes elongate {
+            from { transform: translateX(100px); }
+            to   { transform: translateX(-100px); }
+        }
+    
+        model-viewer > #ar-prompt {
+            position: absolute;
+            left: 50%;
+            bottom: 175px;
+            animation: elongate 2s infinite ease-in-out alternate;
+            display: none;
+        }
+    
+        model-viewer[ar-status="session-started"] > #ar-prompt {
+            display: block;
+        }
+    
+        model-viewer > #ar-prompt > img {
+            animation: circle 4s linear infinite;
+        }
+    
+        model-viewer > #ar-failure {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 175px;
+            display: none;
+        }
+    
+        model-viewer[ar-tracking="not-tracking"] > #ar-failure {
+            display: block;
+        }
+
+        .headerCargando{
+            font-family: 'Lato', sans-serif;
+            position: absolute;
+            left: 50%;
+            top: 33%;
+            transform: translateX(-50%);
+            font-size: 25px;
+            font-weight: 700;
+            line-height: 20px;
+            overflow: visible;
+            color: #f7e6ff;
+            border-radius: 15px;
+            padding-top: 7.5px;
+            padding-left: 7.5px;
+            padding-right: 7.5px;
+            padding-bottom: 7.5px;
+            background-color: rgba(0, 0, 0, 0.35);
+            transition: visibility 0.29s;
+        }
+
+        .progress-bar {
+            display: block;
+            width: 75%;
+            height: 10%;
+            max-height: 3%;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate3d(-50%, -50%, 0);
+            border-radius: 25px;
+            box-shadow: 0px 4px 10px 1px rgba(0, 0, 0, 0.5), 0px 0px 5px 1px rgba(255, 255, 255, 0.6);
+            border: 2px solid rgba(224, 224, 224, 0.9);
+            background-color: rgba(255, 255, 255, 0.815);
+        }
+
+        .progress-bar.hide {
+            visibility: hidden;
+            transition: visibility 0.29s;
+        }
+
+        .update-bar {
+            background: linear-gradient(90deg, rgba(52,91,250,1) 0%, rgba(107,140,175,1) 36%, rgba(148,176,120,1) 66%, rgba(173,199,86,1) 88%, rgba(183,207,73,1) 100%);
+            width: 0%;
+            height: 100%;
+            border-radius: 25px;
+            float: left;
+            transition: width 0.29s;
+        }
+        #color-controls{
+            visibility: hidden;
+            position: absolute;
+            bottom: 3%;
+            left: 3%;
+            display: flex;
+        }
+
+        select {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            select:hover {
+            border-color: #888;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
+
+    
+    </style>
+</head>
+<body style="overflow: hidden;">
+<div class="container">
+    <model-viewer id="lazy-load"
+    reveal="manual"
+    src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXViEvgxqCgKB40I6VX/root/content" 
+    poster=""
+    skybox-image="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVgWVr_HU1FGWArRFU/root/content"
+    environment-image="https://dl.dropboxusercontent.com/s/gq8flbdmrg8k36v/dancing_hall_1k.hdr"
+    shadow-intensity="1"
+    ar ar-modes="scene-viewer quick-look" ar-scale="auto"
+    camera-controls
+    touch-action="pan-y"
+    disable-tap
+    autoplay
+    alt="Model Feature">
+        <div id="lazy-load-poster" slot="poster"></div>
+        <div id="button-load" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
+        <select id="color-controls" onchange="updateCol();">
+            <option value="https://luisfe01.github.io/raweb/full.jpg" selected="selected">Mapa Completo</option>
+            <option value="https://luisfe01.github.io/raweb/volcanes.jpg">Cadena volcánica</option>
+            <option value="https://luisfe01.github.io/raweb/graben_central.jpg">Graben Central</option>
+            <option value="https://luisfe01.github.io/raweb/montanas_del_norte.jpg">Zona montañosa Norte</option>
+            <option value="https://luisfe01.github.io/raweb/cordillera_costera.jpg">Cordilleras costeras</option>
+            <option value="https://luisfe01.github.io/raweb/planicie_costera.jpg">Planicie costera</option>
+        </select>
+        <div>
+            <h1 class="headerCargando">Cargando...</h1>
+        </div>
+        <div class="progress-bar hide" slot="progress-bar">
+            <div class="update-bar"></div>
+        </div>
+        <button slot="ar-button" id="ar-button">
+            Ver en tu espacio
+        </button>
+
+        <div id="ar-prompt">
+            <img src="https://dsm01pap003files.storage.live.com/y4mC3A-1tKI1i5D3AoIyjvOOuPJAz8kETA8txgPsEcALlJdoo2jHeXux-QXaef_-mipaNigQon40VTR2zDvYjEJ-hQ4M24qjsXIT622gNImHa_JW0BuaE9j_cE-MqBDqdW2_FH2cJTAITEw4MiKautYcjwcxQmIJybteHZWBu6OxYtCXjTU8PuC1iPu-We1fjJs?width=50&height=54&cropmode=none">
+        </div>
         
-        //Get current text value (name) of selected option
-        var e = document.getElementById("color-controls");
-        var finishName = e.options[e.selectedIndex].text;
-        
-        material.pbrMetallicRoughness['baseColorTexture'].texture.source.setURI(e.value);
- 
-       
-      });
+        <button id="ar-failure">
+            Realidad Aumentada no está rastreando!
+        </button>
+    </model-viewer>
+</div>
+<script>
+
+    const modelViewer = document.querySelector("#lazy-load");
+    modelViewer.addEventListener('load', () => {
+    textura = document.querySelector("#color-controls")    
+    textura.style.visibility = "visible";
+    });
+
+    async function updateCol() {
+      const speaker = document.querySelector("#lazy-load");
+      const selectedOption = document.getElementById("color-controls").value;
+
+      if (speaker.model) {
+        const [material] = speaker.model.materials;
+        const texture = await createTexture(speaker, selectedOption);
+        material.pbrMetallicRoughness.baseColorTexture.setTexture(texture);
+      }
     }
- 
-  </script>
+
+    async function createTexture(modelViewer, uri) {
+      const texture = await modelViewer.createTexture(uri);
+      return texture;
+    }
+
+    document.querySelector("#lazy-load").addEventListener("load", updateCol);
+
+</script>
+<script>
   
+
+    const modelViewerID = document.getElementById("lazy-load")
+    const x = 1;
+    const y = 1;
+    const z = 1;
+    modelViewerID.scale = `${x} ${y} ${z}`;
+
+    const botonDeCarga = document.getElementById('button-load');
+    botonDeCarga.addEventListener('click', (event) => {
+        botonDeCarga.style.visibility = "hidden";
+    });
+
+  
+
+    var estado = document.getElementsByClassName('headerCargando')[0];
+    estado.style.visibility = "hidden";
+
+  
+    
+    const onProgress = (event) => {
+    const progressBar = event.target.querySelector('.progress-bar');
+    const updatingBar = event.target.querySelector('.update-bar');
+    updatingBar.style.width = `${event.detail.totalProgress * 100}%`;
+    if (event.detail.totalProgress === 1) {
+        progressBar.classList.add('hide');
+        estado.style.visibility = "hidden";
+    } else {
+        progressBar.classList.remove('hide');
+        estado.style.visibility = "visible";
+
+    }
+    };
+
+    document.getElementById("lazy-load").addEventListener('progress', onProgress);
+
+ 
+    document.querySelector('#button-load').addEventListener('click', 
+    () => document.querySelector('#lazy-load').dismissPoster());
+                
+    
+
+</script>
 </body>
 </html>
