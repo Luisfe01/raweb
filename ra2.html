@@ -199,6 +199,30 @@
             float: left;
             transition: width 0.29s;
         }
+        #color-controls{
+            visibility: hidden;
+            position: absolute;
+            bottom: 3%;
+            left: 3%;
+            display: flex;
+        }
+
+        select {
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #fff;
+            color: #333;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: border-color 0.3s, box-shadow 0.3s;
+            }
+
+            select:hover {
+            border-color: #888;
+            box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+        }
 
     
     </style>
@@ -207,7 +231,7 @@
 <div class="container">
     <model-viewer id="lazy-load"
     reveal="manual"
-    src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVhn_utaMdxemcymfc/root/content" 
+    src="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXViEvgxqCgKB40I6VX/root/content" 
     poster=""
     skybox-image="https://api.onedrive.com/v1.0/shares/s!Avwi-ZqOMaXVgWVr_HU1FGWArRFU/root/content"
     environment-image="https://dl.dropboxusercontent.com/s/gq8flbdmrg8k36v/dancing_hall_1k.hdr"
@@ -220,6 +244,14 @@
     alt="Model Feature">
         <div id="lazy-load-poster" slot="poster"></div>
         <div id="button-load" slot="poster"><img class="loadIcon" src="https://dsm01pap003files.storage.live.com/y4mPNqwvUEijZlApIcFJYXZOtFLON0J1UkVqDte0G6-xiHxf1uPtRxHWZi1Al1XoCIDuzcLfpacP08TW5NjeOOV98nRMQ2G5fKrNeqcKNtRRkPwKIdwivyrIRdWUmr8rNrCGtPhLlMOLVyBxDbzJz9PCAiuAquUbNKvf4mB7dxlIWnZAIcmeKHazPXRt_p-cmsC?width=24&height=24&cropmode=none" alt=""> Cargar modelo 3D</div>
+        <select id="color-controls" onchange="updateCol();">
+            <option value="https://luisfe01.github.io/raweb/full.jpg" selected="selected">Mapa Completo</option>
+            <option value="https://luisfe01.github.io/raweb/volcanes.jpg">Cadena volcánica</option>
+            <option value="https://luisfe01.github.io/raweb/graben_central.jpg">Graben Central</option>
+            <option value="https://luisfe01.github.io/raweb/montanas_del_norte.jpg">Zona montañosa Norte</option>
+            <option value="https://luisfe01.github.io/raweb/cordillera_costera.jpg">Cordilleras costeras</option>
+            <option value="https://luisfe01.github.io/raweb/planicie_costera.jpg">Planicie costera</option>
+        </select>
         <div>
             <h1 class="headerCargando">Cargando...</h1>
         </div>
@@ -239,7 +271,33 @@
         </button>
     </model-viewer>
 </div>
+<script>
 
+    const modelViewer = document.querySelector("#lazy-load");
+    modelViewer.addEventListener('load', () => {
+    textura = document.querySelector("#color-controls")    
+    textura.style.visibility = "visible";
+    });
+
+    async function updateCol() {
+      const speaker = document.querySelector("#lazy-load");
+      const selectedOption = document.getElementById("color-controls").value;
+
+      if (speaker.model) {
+        const [material] = speaker.model.materials;
+        const texture = await createTexture(speaker, selectedOption);
+        material.pbrMetallicRoughness.baseColorTexture.setTexture(texture);
+      }
+    }
+
+    async function createTexture(modelViewer, uri) {
+      const texture = await modelViewer.createTexture(uri);
+      return texture;
+    }
+
+    document.querySelector("#lazy-load").addEventListener("load", updateCol);
+
+</script>
 <script>
   
 
